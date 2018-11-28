@@ -1,11 +1,11 @@
-from flask import Flask
+from flask import Flask, render_template
 app = Flask(__name__)
 
 
 @app.route("/")
 def index():
     """Handle requests for / via GET (and POST)"""
-    return "Billy Booksearch!"
+    return render_template("index.html")
 
 
 @app.errorhandler(404)
