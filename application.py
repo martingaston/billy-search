@@ -10,4 +10,4 @@ def index():
 
 @app.errorhandler(404)
 def page_not_found(error):
-    return "404 - Page Not Found!"
+    return "404 - Page Not Found!", 404
