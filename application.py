@@ -1,4 +1,6 @@
+from helpers import google_book_search, parse_search
 from flask import Flask, render_template, request
+
 app = Flask(__name__)
 
 
@@ -10,8 +12,10 @@ def index():
 
 @app.route('/query', methods=['POST'])
 def query():
-    print(request.form['query'])
-    return "Ok!"
+    query = request.form['search']
+    api_search = google_book_search(query)
+    parsed_text = parse_search(api_search)
+    return str(parsed_text)
 
 
 @app.errorhandler(404)
