@@ -1,4 +1,6 @@
-from flask import Flask, render_template
+from helpers import google_book_search, parse_search
+from flask import Flask, render_template, request
+
 app = Flask(__name__)
 
 
@@ -8,6 +10,14 @@ def index():
     return render_template("index.html")
 
 
+@app.route('/query', methods=['POST'])
+def query():
+    query = request.form['search']
+    api_search = google_book_search(query)
+    parsed_text = parse_search(api_search)
+    return str(parsed_text)
+
+
 @app.errorhandler(404)
 def page_not_found(error):
-    return "404 - Page Not Found!"
+    return "404 - Page Not Found!", 404
