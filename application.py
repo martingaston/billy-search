@@ -15,7 +15,7 @@ def query():
     query = request.form['search']
     api_search = google_book_search(query)
     parsed_text = parse_search(api_search)
-    return str(parsed_text)
+    return render_template("search.html", search=query, data=parsed_text)
 
 
 @app.errorhandler(404)
