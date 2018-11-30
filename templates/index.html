@@ -1,13 +1,31 @@
 {% extends "layout.html" %} {% block body %}
 
-<h2>Billy Booksearch</h2>
-
-<form action="/query" method="POST">
-  <div>
-    <label for="search">Enter your name: </label>
-    <input type="text" name="search" id="search" required />
-  </div>
-  <input type="submit" value="Search for Books!" />
-</form>
+<div
+  class="pa4-l vh-100 flex flex-column content-center justify-center items-center"
+>
+  <a href="/"
+    ><img class="w3 ma4" alt="bookcase" src="/static/bookcase.svg"
+  /></a>
+  <form action="/query" method="POST" class="w-70">
+    <fieldset
+      class="cf bn ma0 pa0 flex flex-column content-center justify-center items-center"
+    >
+      <label class="clip" for="search">Search for books:</label>
+      <input
+        class="pa2 input-reset ba bg-white w-100"
+        placeholder="Book title..."
+        type="text"
+        name="search"
+        value=""
+        id="search"
+      />
+      <input
+        class="bn ma4 button-reset f6 link dim ph3 pv2 dib white bg-black"
+        type="submit"
+        value="Search for Books!"
+      />
+    </fieldset>
+  </form>
+</div>
 
 {% endblock %}

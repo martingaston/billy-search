@@ -1,0 +1,76 @@
+{% extends "layout.html" %} {% block body %}
+<header
+  class="z-5 top-0 bg-black-90 fixed w-100 ph3 pv3 pv4-ns ph4-ns flex flex-row"
+>
+  <a href="/"
+    ><img class="mr3 ml3 w2" alt="bookcase" src="/static/bookcase.svg"
+  /></a>
+  <form action="/query" method="POST" class="w-80 fl">
+    <fieldset class="cf bn ma0 pa0">
+      <label class="clip" for="search">Search for books:</label>
+      <input
+        class="pa2 input-reset ba bg-white w-100"
+        placeholder="{{ search }}"
+        type="text"
+        name="search"
+        value=""
+        id="search"
+      />
+    </fieldset>
+  </form>
+</header>
+<div class="cf pa2 mt6">
+  {% for book in data["items"] %}
+  <div class="fl w-50 mw-50 w-25-m mw-25-m w-20-l mw-20-l pa2">
+    <a
+      href="https://geo.itunes.apple.com/us/album/blonde/id1146195596?at=1l3vqFJ&mt=1&app=music"
+      class="db link dim tc"
+    >
+      <img
+        src="{{ book.imageLinks.thumbnail }}"
+        alt="{{ book.title }} book cover"
+        class="center h4 h5-ns db outline black-10"
+      />
+      <dl class="mt2 f6 lh-copy">
+        <dt class="clip">Title</dt>
+        <dd class="ml0 black truncate w-100">{{ book.title }}</dd>
+        <dt class="clip">Author(s)</dt>
+        <dd class="ml0 gray truncate w-100">{{ book.authors }}</dd>
+      </dl>
+    </a>
+  </div>
+  {% endfor %}
+</div>
+<div class="flex items-center justify-center pa4">
+  <a
+    href="#0"
+    class="f5 no-underline black bg-animate hover-bg-black hover-white inline-flex items-center pa3 ba border-box mr4"
+  >
+    <svg
+      class="w1"
+      data-icon="chevronLeft"
+      viewBox="0 0 32 32"
+      style="fill:currentcolor"
+    >
+      <title>chevronLeft icon</title>
+      <path d="M20 1 L24 5 L14 16 L24 27 L20 31 L6 16 z"></path>
+    </svg>
+    <span class="pl1">Previous</span>
+  </a>
+  <a
+    href="#0"
+    class="f5 no-underline black bg-animate hover-bg-black hover-white inline-flex items-center pa3 ba border-box"
+  >
+    <span class="pr1">Next</span>
+    <svg
+      class="w1"
+      data-icon="chevronRight"
+      viewBox="0 0 32 32"
+      style="fill:currentcolor"
+    >
+      <title>chevronRight icon</title>
+      <path d="M12 1 L26 16 L12 31 L8 27 L18 16 L8 5 z"></path>
+    </svg>
+  </a>
+</div>
+{% endblock %}

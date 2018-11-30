@@ -22,4 +22,4 @@ def parse_search(json):
                 book[field] = ""
         book_list.append(book)
 
-    return {"items": book_list}
+    return {"index": 0, "total": body["totalItems"], "items": book_list}

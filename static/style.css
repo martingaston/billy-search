@@ -1,7 +1,3 @@
-* {
-  box-sizing: border-box;
-}
-
 body {
-  background: gainsboro;
+  box-sizing: border-box;
 }

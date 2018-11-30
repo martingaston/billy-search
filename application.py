@@ -12,10 +12,12 @@ def index():
 
 @app.route('/query', methods=['POST'])
 def query():
+    if request.args.get('start') is None or request.args.get('start') < 0:
+        start = 0
     query = request.form['search']
-    api_search = google_book_search(query)
+    api_search = google_book_search(query, start)
     parsed_text = parse_search(api_search)
-    return str(parsed_text)
+    return render_template("search.html", search=query, data=parsed_text)
 
 
 @app.errorhandler(404)
