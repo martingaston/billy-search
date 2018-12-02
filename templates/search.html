@@ -21,7 +21,7 @@
 </header>
 <div class="cf pa2 mt6">
   {% for book in data["items"] %}
-  <div class="fl w-50 mw-50 w-25-m mw-25-m w-20-l mw-20-l pa2">
+  <div class="overflow-hidden fl w-50 mw-50 w-25-m mw-25-m w-20-l mw-20-l pa2">
     <a
       href="https://geo.itunes.apple.com/us/album/blonde/id1146195596?at=1l3vqFJ&mt=1&app=music"
       class="db link dim tc"
@@ -58,8 +58,8 @@
     </svg>
     <span class="pl1">Previous</span>
   </a>
-  {% endif %} Results {{ start }}-{{ count }} of {{ data.total }} {% if start +
-  19 <= data.total %}
+  {% endif %} Results {{ start }}-{{ count }} {% if data["items"]|length == 20
+  %}
   <a
     href="/query?search={{ search }}&start={{ start + 19 }}"
     class="ml4 f5 no-underline black bg-animate hover-bg-black hover-white
