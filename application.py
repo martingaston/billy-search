@@ -13,15 +13,19 @@ def index():
 @app.route('/query')
 def query():
     """Display search requests and pagination via GET"""
-    if not request.args.get('search'):
+    # return the user to the index page if they're not searching for anything
+    if not request.args.get("search"):
         return redirect(url_for("index"))
 
-    if request.args.get('start') is None or int(request.args.get('start')) < 0:
+    # check for correct pagination from start value
+    if request.args.get("start") is None or int(request.args.get("start")) < 0:
         start = 0
     else:
-        start = int(request.args.get('start'))
+        start = int(request.args.get("start"))
 
+    # Get the search value from the request query string
     query = request.args.get('search')
+    # Hit and parse the API
     api_search = google_book_search(query, start)
     parsed_text = parse_search(api_search)
 

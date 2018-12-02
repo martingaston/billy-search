@@ -10,6 +10,7 @@ def google_book_search(search, startIndex=0, maxResults=20):
 
 
 def parse_search(json):
+    """Take Google Books API JSON as an input and parse into data for application"""
     # return an empty payload if the response is not 200
     if json["status"] != 200:
         return {"total": 0, "items": []}
