@@ -20,19 +20,33 @@ def parse_search(json):
             book = {}
 
             # check the API responses for existing data - add a empty string if no data is returned from API
-            for field in ["authors", "title", "publisher", "imageLinks"]:
+            for field in ["authors", "title", "publisher", "imageLinks", "infoLink"]:
                 try:
                     book[field] = i["volumeInfo"][field]
                 except KeyError:
                     book[field] = ""
 
-            # if API doesn't return a thumbnail, add a generic cover for the search listings
-            if not book["imageLinks"]:
-                book["imageLinks"] = {
-                    "thumbnail": "static/generic-book-cover.jpg"}
+            # add additional parsing functions
+            book["authors"] = parse_authors(book["authors"])
+            book["imageLinks"] = parse_thumbnail(book["imageLinks"])
+
+            # append book to
             book_list.append(book)
     except KeyError:
         return {"total": 0, "items": []}
 
     # return our parsed & formatted data
     return {"index": 0, "total": body["totalItems"], "items": book_list}
+
+
+def parse_authors(authors_list=""):
+    """Join array of authors into comma-separated string"""
+    return ", ".join(authors_list)
+
+
+def parse_thumbnail(imageLinks=""):
+    """Add generic image to imageLinks if empty, else return input"""
+    if not imageLinks:
+        return {"thumbnail": "static/generic-book-cover.jpg"}
+    else:
+        return imageLinks

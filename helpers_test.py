@@ -2,7 +2,7 @@ import pytest
 import requests_mock
 import json
 
-from helpers import google_book_search, parse_search
+from helpers import google_book_search, parse_search, parse_authors, parse_thumbnail
 
 with open("mock.json") as f:
     mock_json = f.read()
@@ -26,6 +26,26 @@ class TestGoogleBookSearch(object):
         assert type(google_book_search("Harry Potter")["body"]) is dict
 
 
+class TestParseAuthors(object):
+    def test_parse_authors_returns_csv_string(self):
+        assert parse_authors(["William Shakespeare", "Bill Bryson", "George Saunders"]
+                             ) == "William Shakespeare, Bill Bryson, George Saunders"
+
+    def test_parse_empty_authors(self):
+        assert parse_authors("") == ""
+
+
+class TestParseThumbnail(object):
+    def test_parse_thumbnail_adds_generic_thumbnail(self):
+        assert parse_thumbnail(
+            "") == {"thumbnail": "static/generic-book-cover.jpg"}
+
+    def test_parse_thumbnail_returns_valid_unchanged_dict(self):
+        thumb_dict = {"smallThumbnail": "www.internet.com/covers/tomThumb.png",
+                      "thumbnail": "www.internet.com/covers/cover.png"}
+        assert parse_thumbnail(thumb_dict) == thumb_dict
+
+
 class TestParseSearch(object):
     def test_parse_returns_twenty_objects(self):
         """Ensure parse_search() returns a JSON response with a list of 20 values as the value to the items key"""
@@ -37,7 +57,7 @@ class TestParseSearch(object):
     def test_parse_returns_author(self):
         """Ensure the parse returns an author key with correct value"""
         book = parse_search(parse_data)["items"][0]
-        assert book["authors"] == ["J.K. Rowling"]
+        assert book["authors"] == "J.K. Rowling"
 
     def test_parse_returns_title(self):
         """Ensure the parse returns a book title with correct value"""
@@ -54,3 +74,8 @@ class TestParseSearch(object):
         """Ensure the parse returns an thumbnail key with correct value"""
         book = parse_search(parse_data)["items"][3]
         assert book["imageLinks"]["thumbnail"] == "http://books.google.com/books/content?id=MnSHDAAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+
+    def test_parse_returns_info_link(self):
+        """Ensure parsed data returns an infoLink"""
+        book = parse_search(parse_data)["items"][0]
+        assert book["infoLink"] == "http://books.google.co.uk/books?id=wrOQLV6xB-wC&dq=harry+potter&hl=&source=gbs_api"
