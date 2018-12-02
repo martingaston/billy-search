@@ -20,7 +20,7 @@ def parse_search(json):
             book = {}
 
             # check the API responses for existing data - add a empty string if no data is returned from API
-            for field in ["authors", "title", "publisher", "imageLinks"]:
+            for field in ["authors", "title", "publisher", "imageLinks", "infoLink"]:
                 try:
                     book[field] = i["volumeInfo"][field]
                 except KeyError:

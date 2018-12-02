@@ -22,10 +22,7 @@
 <div class="pa2 mt6">
   {% for book in data["items"] %}
   <div class="overflow-hidden fl w-50 mw-50 w-25-ns mw-25-ns pa2">
-    <a
-      href="https://geo.itunes.apple.com/us/album/blonde/id1146195596?at=1l3vqFJ&mt=1&app=music"
-      class="db link dim tc"
-    >
+    <a href="{{ book.infoLink }}" class="db link dim tc">
       <img
         src="{{ book.imageLinks.thumbnail }}"
         alt="{{ book.title }} book cover"

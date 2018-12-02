@@ -74,3 +74,8 @@ class TestParseSearch(object):
         """Ensure the parse returns an thumbnail key with correct value"""
         book = parse_search(parse_data)["items"][3]
         assert book["imageLinks"]["thumbnail"] == "http://books.google.com/books/content?id=MnSHDAAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+
+    def test_parse_returns_info_link(self):
+        """Ensure parsed data returns an infoLink"""
+        book = parse_search(parse_data)["items"][0]
+        assert book["infoLink"] == "http://books.google.co.uk/books?id=wrOQLV6xB-wC&dq=harry+potter&hl=&source=gbs_api"
