@@ -40,11 +40,11 @@
   </div>
   {% endfor %}
 </div>
-<div class="flex items-center justify-center pa4">
+<div class="mw-50 flex items-center justify-center pa4">
   {% if start - 21 >= 0 %}
   <a
     href="/query?search={{ search }}&start={{ start - 21 }}"
-    class="f5 no-underline black bg-animate hover-bg-black hover-white inline-flex items-center pa3 ba border-box mr4"
+    class="f6 f5-ns no-underline black bg-animate hover-bg-black hover-white inline-flex items-center pa2 pa3-ns ba border-box mr4"
   >
     <svg
       class="w1"
@@ -57,12 +57,13 @@
     </svg>
     <span class="pl1">Previous</span>
   </a>
-  {% endif %} Results {{ start }}-{{ count }} {% if data["items"]|length == 20
-  %}
+  {% endif %}
+  <span class="tc f7 f6-ns">Results {{ start }}-{{ count }}</span> {% if
+  data["items"]|length == 20 %}
   <a
     href="/query?search={{ search }}&start={{ start + 19 }}"
-    class="ml4 f5 no-underline black bg-animate hover-bg-black hover-white
-    inline-flex items-center pa3 ba border-box"
+    class="ml4 f6 f5-ns no-underline black bg-animate hover-bg-black hover-white
+    inline-flex items-center pa2 pa3-ns ba border-box"
   >
     <span class="pr1">Next</span>
     <svg
