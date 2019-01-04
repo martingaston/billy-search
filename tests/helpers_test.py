@@ -2,10 +2,10 @@ import pytest
 import requests_mock
 import json
 
-from helpers import google_book_search, parse_search, parse_authors, parse_thumbnail
+from billy.helpers import google_book_search, parse_search, parse_authors, parse_thumbnail
 
 # read our mock JSON data to mock_json
-with open("mock.json") as f:
+with open("tests/mock.json") as f:
     mock_json = f.read()
 
 

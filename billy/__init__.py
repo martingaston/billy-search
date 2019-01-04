@@ -1,41 +1,44 @@
 from .helpers import google_book_search, parse_search
 from flask import Flask, render_template, request, redirect, url_for
 
-app = Flask(__name__)
 
+def create_app(test_config=None):
+    """Create and configure Flask application factory for Billy Booksearch app"""
 
-@app.route("/")
-def index():
-    """Handle requests for / via GET"""
-    return render_template("index.html")
+    app = Flask(__name__)
 
+    @app.route("/")
+    def index():
+        """Handle requests for / via GET"""
+        return render_template("index.html")
 
-@app.route('/query')
-def query():
-    """Display search requests and pagination via GET"""
-    # return the user to the index page if they're not searching for anything
-    if not request.args.get("search"):
-        return redirect(url_for("index"), placeholder="No search term specified. Search again...")
+    @app.route('/query')
+    def query():
+        """Display search requests and pagination via GET"""
+        # return the user to the index page if they're not searching for anything
+        if not request.args.get("search"):
+            return redirect(url_for("index"))
 
-    # check for correct pagination from start value
-    if request.args.get("start") is None or int(request.args.get("start")) < 0:
-        start = 0
-    else:
-        start = int(request.args.get("start"))
+        # check for correct pagination from start value
+        if request.args.get("start") is None or int(request.args.get("start")) < 0:
+            start = 0
+        else:
+            start = int(request.args.get("start"))
 
-    # Get the search value from the request query string
-    query = request.args.get('search')
-    # Hit and parse the API
-    api_search = google_book_search(query, start)
-    parsed_text = parse_search(api_search)
+        # Get the search value from the request query string
+        query = request.args.get('search')
+        # Hit and parse the API
+        api_search = google_book_search(query, start)
+        parsed_text = parse_search(api_search)
 
-    if len(parsed_text["items"]) > 0:
-        return render_template("search.html", start=start+1, count=start + len(parsed_text["items"]), search=query, data=parsed_text)
-    else:
-        return redirect(url_for("index"), placeholder="No results :( Try again!")
+        if len(parsed_text["items"]) > 0:
+            return render_template("search.html", start=start+1, count=start + len(parsed_text["items"]), search=query, data=parsed_text)
+        else:
+            return redirect(url_for("index"))
 
+    @app.errorhandler(404)
+    def page_not_found(error):
+        """Return 404 for incorrect HTTP queries"""
+        return "404 - Page Not Found!", 404
 
-@app.errorhandler(404)
-def page_not_found(error):
-    """Return 404 for incorrect HTTP queries"""
-    return "404 - Page Not Found!", 404
+    return app
