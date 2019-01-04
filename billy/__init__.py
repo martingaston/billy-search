@@ -1,4 +1,4 @@
-from helpers import google_book_search, parse_search
+from .helpers import google_book_search, parse_search
 from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
@@ -15,7 +15,7 @@ def query():
     """Display search requests and pagination via GET"""
     # return the user to the index page if they're not searching for anything
     if not request.args.get("search"):
-        return redirect(url_for("index"))
+        return redirect(url_for("index"), placeholder="No search term specified. Search again...")
 
     # check for correct pagination from start value
     if request.args.get("start") is None or int(request.args.get("start")) < 0:
@@ -32,8 +32,7 @@ def query():
     if len(parsed_text["items"]) > 0:
         return render_template("search.html", start=start+1, count=start + len(parsed_text["items"]), search=query, data=parsed_text)
     else:
-        print("Items is 0!")
-        return redirect(url_for("index"))
+        return redirect(url_for("index"), placeholder="No results :( Try again!")
 
 
 @app.errorhandler(404)

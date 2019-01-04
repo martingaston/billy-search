@@ -13,7 +13,11 @@
       <label class="clip" for="search">Search for books:</label>
       <input
         class="pa2 input-reset ba bg-white w-100"
-        placeholder="Book title..."
+        {% if users %}
+          placeholder="{{ placeholder }}"
+        {% else %}
+          placeholder="Book title..."
+        {% endif %}
         type="text"
         name="search"
         value=""
