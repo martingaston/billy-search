@@ -34,4 +34,4 @@ def mock():
 @pytest.fixture
 def book_list():
     mock = {"status": 200, "body": json.loads(mock_json)}
-    return BookList(testing=mock)
+    return BookList(testing=mock, https=True)

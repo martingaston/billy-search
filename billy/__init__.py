@@ -1,11 +1,18 @@
 from flask import Flask, render_template, request, redirect, url_for
-from .utils import BookList
+from .utils import BookList, convert_to_https
 
 
 def create_app(test_config=None):
     """Create and configure Flask application factory for Billy Booksearch app"""
 
     app = Flask(__name__)
+
+    @app.before_request
+    def before_request():
+        if not request.is_secure and app.env != "development":
+            url = convert_to_https(request.url)
+            code = 301
+            return redirect(url, code=code)
 
     @app.route("/")
     def index():
@@ -26,7 +33,8 @@ def create_app(test_config=None):
             start = int(request.args.get("start"))
 
         query = request.args.get('search')
-        book_list_parsed = BookList(query, start).parse()
+        https = True if app.env != "development" else False
+        book_list_parsed = BookList(query, start, https=https).parse()
 
         if len(book_list_parsed["items"]) > 0:
             return render_template("search.html", start=start+1, count=start + len(book_list_parsed["items"]), search=query, data=book_list_parsed)

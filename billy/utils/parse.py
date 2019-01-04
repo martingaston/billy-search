@@ -1,12 +1,15 @@
 from .search import google_book_search
+from .https import convert_to_https
 
 
 class BookList():
-    def __init__(self, query="", start=0, testing=False):
+    def __init__(self, query="", start=0, testing=False, https=False):
         if not testing:
             self.json = google_book_search(query, start)
         else:
             self.json = testing
+
+        self.https = True if https else False
 
     def parse(self):
         """Take Google Books API JSON as an input and parse into data for application"""
@@ -47,4 +50,8 @@ class BookList():
         if not imageLinks:
             return {"thumbnail": "static/generic-book-cover.jpg"}
         else:
+            if self.https:
+                for link in imageLinks:
+                    imageLinks[link] = convert_to_https(imageLinks[link])
+
             return imageLinks

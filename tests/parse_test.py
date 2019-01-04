@@ -24,6 +24,11 @@ class TestParseThumbnail(object):
                       "thumbnail": "www.internet.com/covers/cover.png"}
         assert book_list._parse_thumbnail(thumb_dict) == thumb_dict
 
+    def test_parse_thumbnails_converts_to_https(self, book_list):
+        """Ensure parse_thumbnail() converts http to https if BookList has https set to True"""
+        assert book_list._parse_thumbnail({"smallThumbnail": "http://www.internet.com/covers/tomThumb2.jpg"}) == {
+            "smallThumbnail": "https://www.internet.com/covers/tomThumb2.jpg"}
+
 
 class TestParseSearch(object):
     def test_parse_returns_twenty_objects(self, book_list):
@@ -59,7 +64,7 @@ class TestParseSearch(object):
         """Ensure the parse returns an thumbnail key with correct value"""
         response = book_list.parse()
         book = response["items"][3]
-        assert book["imageLinks"]["thumbnail"] == "http://books.google.com/books/content?id=MnSHDAAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        assert book["imageLinks"]["thumbnail"] == "https://books.google.com/books/content?id=MnSHDAAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
 
     def test_parse_returns_info_link(self, book_list):
         """Ensure parsed data returns an infoLink"""
