@@ -22,11 +22,9 @@ def create_app(test_config=None):
     @app.route('/query')
     def query():
         """Display search requests and pagination via GET"""
-        # return the user to the index page if they're not searching for anything
         if not request.args.get("search"):
             return redirect(url_for("index"))
 
-        # check for correct pagination from start value
         if request.args.get("start") is None or int(request.args.get("start")) < 0:
             start = 0
         else:

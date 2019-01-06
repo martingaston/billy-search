@@ -12,12 +12,14 @@ class BookList():
         self.https = True if https else False
 
     def parse(self):
-        """Take Google Books API JSON as an input and parse into data for application"""
-        # return an empty payload if the response is not 200
+        """Take Google Books API JSON as an input and parse into data for application, returning empty payload if error"""
+
         if self.json["status"] != 200:
-            return {"total": 0, "items": []}
+            return empty_payload()
+
         body = self.json["body"]
         book_list = []
+
         try:
             for i in body["items"]:
                 book = {}
@@ -29,17 +31,14 @@ class BookList():
                     except KeyError:
                         book[field] = ""
 
-                # add additional parsing functions
                 book["authors"] = self._parse_authors(book["authors"])
                 book["imageLinks"] = self._parse_thumbnail(book["imageLinks"])
-
-                # append book to
                 book_list.append(book)
-        except KeyError:
-            return {"total": 0, "items": []}
 
-        # return our parsed & formatted data
-        return {"index": 0, "total": body["totalItems"], "items": book_list}
+        except KeyError:
+            return empty_payload()
+
+        return {"total": body["totalItems"], "items": book_list}
 
     def _parse_authors(self, authors_list=""):
         """Join array of authors into comma-separated string"""
@@ -55,3 +54,11 @@ class BookList():
                     imageLinks[link] = convert_to_https(imageLinks[link])
 
             return imageLinks
+
+
+def payload(items, total):
+    return {"total": total, "items": items}
+
+
+def empty_payload():
+    return payload([], 0)
