@@ -5,15 +5,30 @@ Named after the world's most recognisable bookcase 🇸🇪
 
 ## Installation
 
-[You can view the site on Heroku](https://billybooksearch.herokuapp.com/) or follow the below (I recommend [pyenv](https://github.com/pyenv/pyenv), but you can replace with an alternate solution if you prefer) for a local installation:
+[You can view the site on Heroku](https://billybooksearch.herokuapp.com/) or follow the below (I recommend [pyenv](https://github.com/pyenv/pyenv) for Python virtualenv management and version management, but you can replace with an alternate solution if you prefer) for a local installation:
+
+Here's the steps to get pyenv up and running on a Ubuntu distribution with Bash:
+
+```bash
+$ git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+$ echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+$ echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+$ echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
+$ git clone https://github.com/pyenv/pyenv-virtualenv.git $HOME/.pyenv/plugins/pyenv-virtualenv
+$ echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
+$ exec "$SHELL"
+```
+
+And the app itself:
 
 ```bash
 $ git clone https://github.com/martingaston/billy-search.git
 $ pyenv install 3.7.1
 $ pyenv virtualenv 3.7.1 billy-search
 $ cd billy-search
-$ pyenv activate billy-search
+$ pyenv local billy-search
 $ pip install -r requirements.txt
+$ pytest # for tests
 $ flask run
 ```
 
@@ -50,6 +65,6 @@ $ flask run
 ## Wishlist
 
 - The next steps for the project, in my opinion, would be to create a `page.html` template that gives more in-depth information about the book when selected from the search results - such as various retailers and links out to Wikipedia and other resources so that users can get a more holistic view of the books. Currently the app is tied closely into Google's ecosystem, and while there's nothing wrong with that it would be nice to be able to offer up a few alternatives. I chose not to include this at this stage as I felt it was straying too far from the initial user stories, although it would certainly be a nice to have feature in a subsequent sprint.
-- A nice UX feature to add would be to replace the pagination with the site auto-loading the next 20 items when the user scrolls to the bottom of the page. This would likely require incorporating some code on the front-end and exposing an API endpoint on the server to feed the code in with a JavaScript `fetch()` request.  
+- A nice UX feature to add would be to replace the pagination with the site auto-loading the next 20 items when the user scrolls to the bottom of the page. This would likely require incorporating some code on the front-end and exposing an API endpoint on the server to feed the code in with a JavaScript `fetch()` request.
 
 Thanks for reading & I hope you enjoy the app!
