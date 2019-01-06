@@ -28,7 +28,7 @@ $ pyenv virtualenv 3.7.1 billy-search
 $ cd billy-search
 $ pyenv local billy-search
 $ pip install -r requirements.txt
-$ pip install . # let the app be used as a Python module (useful for testing)
+$ pip install -e . # let the app be used as a Python module (useful for testing)
 $ pytest # for tests
 $ flask run
 ```
@@ -63,10 +63,22 @@ $ flask run
 - I wanted to keep the code closely aligned with the intended user stories, using the YAGNI and DRY principles to create an application that was a simple as it needed to be.
 - I considered a mobile-first design something to design for from the ground up - this wasn't an explicit user story, however I would argue it is likely best practice in most instances.
 
+## Refactoring & Feedback
+
+- Structure the project in a way that can support better testing and future potential growth. I followed the [recommended approach by the Flask](http://flask.pocoo.org/docs/1.0/patterns/appfactories/) framework for restructuring the project, which should allow the code to be more easily digested for users of the framework.
+- Abstract the various `parse` functions from the API call into their own class.
+- Follow the single responsibility principle and separate the `helpers` function into individual files that serve individual purposes. These now sit in a `utils` folder and are clearly named as to their purpose.
+- Fix the HTTP mixed content warning on thumbnail images - Heroku defaults to `https` but the API returned `http` images by default. I had the app redirect `http` users to `https` by default and used a function to adjust images to `https`.
+- Look into adding integration tests to the `pytest` tests. I have created some simple integration tests which check that the various components of the layout are correctly rendering by ID.
+- Consider the amount of comments being used and look into creating self-documenting code by focusing on sharp function and variable naming along with readable code.
+- See how you can use Tachyons (an atomic CSS framework) to continue the theme of coding by intention. This was a little tricky due to the explicit nature of the framework, but I looked to create consistency across the `class` definitions (e.g. starting with high-level flex/layout classes first and then progressing down through to individual fonts)
+- Ensure the structure of the Python `import`s maintained consistency across the whole project. I couldn't find consensus on this outside of a PEP recommendation to keep imports at the top of a file, so my imports start with direct `imports` and then `import from` below.
+- Add detailed instructions to install the project and run the tests, for anyone who might not be totally familiar with the tooling used in this project.
+
 ## Wishlist
 
 - The next steps for the project, in my opinion, would be to create a `page.html` template that gives more in-depth information about the book when selected from the search results - such as various retailers and links out to Wikipedia and other resources so that users can get a more holistic view of the books. Currently the app is tied closely into Google's ecosystem, and while there's nothing wrong with that it would be nice to be able to offer up a few alternatives. I chose not to include this at this stage as I felt it was straying too far from the initial user stories, although it would certainly be a nice to have feature in a subsequent sprint.
 - A nice UX feature to add would be to replace the pagination with the site auto-loading the next 20 items when the user scrolls to the bottom of the page. This would likely require incorporating some code on the front-end and exposing an API endpoint on the server to feed the code in with a JavaScript `fetch()` request.
-- The bookshelf icon was [lovingly made by Freepik](https://www.flaticon.com/free-icon/bookcase_677239#term=bookshelf&page=1&position=91) but with more time and resource I'd love to work with a designer to create my own icon. 
+- The bookshelf icon was [lovingly made by Freepik](https://www.flaticon.com/free-icon/bookcase_677239#term=bookshelf&page=1&position=91) but with more time and resource I'd love to work with a designer to create my own icon.
 
 Thanks for reading & I hope you enjoy the app!

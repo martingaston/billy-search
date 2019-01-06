@@ -28,7 +28,6 @@ def test_search_route_renders(client):
     with client as c:
         response = c.get("/query?search=Harry+Potter")
         assert b'id="search"' in response.data
-        assert b'id="prev"' in response.data
         assert b'id="next"' in response.data
 
 
