@@ -7,12 +7,12 @@
     ><img class="w3 ma4" alt="bookcase" src="/static/bookcase.svg"
   /></a>
   <form action="/query" method="GET" class="w-70">
-    <fieldset
-      class="cf bn ma0 pa0 flex flex-column content-center justify-center items-center"
+    <div
+      class="georgia cf bn ma0 pa0 flex flex-column content-center justify-center items-center"
     >
       <label class="clip" for="search">Search for books:</label>
       <input
-        class="pa2 input-reset ba bg-white w-100"
+        class="pa2 input-reset ba b--black-20 bg-white w-100"
         {% if placeholder %}
           placeholder="{{ placeholder }}"
         {% else %}
@@ -28,7 +28,7 @@
         type="submit"
         value="Search for Books!"
       />
-    </fieldset>
+    </div>
   </form>
 </div>
 
