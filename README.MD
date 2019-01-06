@@ -5,15 +5,31 @@ Named after the world's most recognisable bookcase 🇸🇪
 
 ## Installation
 
-[You can view the site on Heroku](https://billybooksearch.herokuapp.com/) or follow the below (I recommend [pyenv](https://github.com/pyenv/pyenv), but you can replace with an alternate solution if you prefer) for a local installation:
+[You can view the site on Heroku](https://billybooksearch.herokuapp.com/) or follow the below (I recommend [pyenv](https://github.com/pyenv/pyenv) for Python virtualenv management and version management, but you can replace with an alternate solution if you prefer) for a local installation:
+
+Here's the steps to get pyenv up and running on a Ubuntu distribution with Bash:
+
+```bash
+$ git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+$ echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+$ echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+$ echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
+$ git clone https://github.com/pyenv/pyenv-virtualenv.git $HOME/.pyenv/plugins/pyenv-virtualenv
+$ echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
+$ exec "$SHELL"
+```
+
+And the app itself:
 
 ```bash
 $ git clone https://github.com/martingaston/billy-search.git
 $ pyenv install 3.7.1
 $ pyenv virtualenv 3.7.1 billy-search
 $ cd billy-search
-$ pyenv activate billy-search
+$ pyenv local billy-search
 $ pip install -r requirements.txt
+$ pip install . # let the app be used as a Python module (useful for testing)
+$ pytest # for tests
 $ flask run
 ```
 

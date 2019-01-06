@@ -10,7 +10,7 @@
       <label class="clip" for="search">Search for books:</label>
       <input
         class="pa2 input-reset ba bg-white w-100"
-        placeholder="{{ search|title }}"
+        placeholder="{{ search | title }}"
         type="text"
         name="search"
         value=""
@@ -55,7 +55,7 @@
       <title>chevronLeft icon</title>
       <path d="M20 1 L24 5 L14 16 L24 27 L20 31 L6 16 z"></path>
     </svg>
-    <span class="pl1">Previous</span>
+    <span id="prev" class="pl1">Previous</span>
   </a>
   {% endif %}
   <span class="tc f7 f6-ns">Results {{ start }}-{{ count }}</span> {% if
@@ -65,7 +65,7 @@
     class="ml4 f6 f5-ns no-underline black bg-animate hover-bg-black hover-white
     inline-flex items-center pa2 pa3-ns ba border-box"
   >
-    <span class="pr1">Next</span>
+    <span id="next" class="pr1">Next</span>
     <svg
       class="w1"
       data-icon="chevronRight"
