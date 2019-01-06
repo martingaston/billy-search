@@ -1,14 +1,14 @@
 {% extends "layout.html" %} {% block body %}
 
 <div
-  class="pa4-l vh-100 flex flex-column content-center justify-center items-center"
+  class="flex flex-column justify-center items-center pa4-l vh-100"
 >
   <a href="/"
     ><img class="w3 ma4" alt="bookcase" src="/static/bookcase.svg"
   /></a>
   <form action="/query" method="GET" class="w-70">
     <div
-      class="georgia cf bn ma0 pa0 flex flex-column content-center justify-center items-center"
+      class="flex flex-column justify-center items-center georgia"
     >
       <label class="clip" for="search">Search for books:</label>
       <input
@@ -26,6 +26,7 @@
       <input
         class="bn ma4 button-reset f6 link dim ph3 pv2 dib white bg-black"
         type="submit"
+        id="search_button"
         value="Search for Books!"
       />
     </div>
