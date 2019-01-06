@@ -28,6 +28,7 @@ $ pyenv virtualenv 3.7.1 billy-search
 $ cd billy-search
 $ pyenv local billy-search
 $ pip install -r requirements.txt
+$ pip install . # let the app be used as a Python module (useful for testing)
 $ pytest # for tests
 $ flask run
 ```

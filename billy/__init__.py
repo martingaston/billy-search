@@ -9,7 +9,7 @@ def create_app(test_config=None):
 
     @app.before_request
     def before_request():
-        if not request.is_secure and app.env != "development":
+        if not app.config["TESTING"] and not request.is_secure and app.env != "development":
             url = convert_to_https(request.url)
             code = 301
             return redirect(url, code=code)

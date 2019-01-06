@@ -8,16 +8,16 @@ from billy.utils import BookList
 @pytest.fixture
 def app():
 
-    app = create_app({
-        'TESTING': True
-    })
+    app = create_app()
+    app.config['TESTING'] = True
 
     yield app
 
 
 @pytest.fixture
 def client(app):
-    return app.test_client()
+    client = app.test_client()
+    yield client
 
 
 # read our mock JSON data to mock_json
