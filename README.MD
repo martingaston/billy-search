@@ -67,5 +67,6 @@ $ flask run
 
 - The next steps for the project, in my opinion, would be to create a `page.html` template that gives more in-depth information about the book when selected from the search results - such as various retailers and links out to Wikipedia and other resources so that users can get a more holistic view of the books. Currently the app is tied closely into Google's ecosystem, and while there's nothing wrong with that it would be nice to be able to offer up a few alternatives. I chose not to include this at this stage as I felt it was straying too far from the initial user stories, although it would certainly be a nice to have feature in a subsequent sprint.
 - A nice UX feature to add would be to replace the pagination with the site auto-loading the next 20 items when the user scrolls to the bottom of the page. This would likely require incorporating some code on the front-end and exposing an API endpoint on the server to feed the code in with a JavaScript `fetch()` request.
+- The bookshelf icon was [lovingly made by Freepik](https://www.flaticon.com/free-icon/bookcase_677239#term=bookshelf&page=1&position=91) but with more time and resource I'd love to work with a designer to create my own icon. 
 
 Thanks for reading & I hope you enjoy the app!
